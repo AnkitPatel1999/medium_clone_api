@@ -2,7 +2,7 @@
   "name": "medium",
   "version": "1.0.0",
   "description": "medium clone",
-  "main": "src/server.js",
+  "main": "dist/server.js",
   "scripts": {
     "build": "tsc",
     "prestart": "npm run build",
