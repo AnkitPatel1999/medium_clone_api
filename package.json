@@ -4,7 +4,9 @@
   "description": "medium clone",
   "main": "src/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "tsc",
+    "prestart": "npm run build",
+    "start": "node dist/server.js"
   },
   "repository": {
     "type": "git",
@@ -15,5 +17,13 @@
   "bugs": {
     "url": "https://github.com/AnkitPatel1999/medium_clone_api/issues"
   },
-  "homepage": "https://github.com/AnkitPatel1999/medium_clone_api#readme"
+  "homepage": "https://github.com/AnkitPatel1999/medium_clone_api#readme",
+  "devDependencies": {
+    "@types/express": "^4.17.11"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "request": "^2.88.2",
+    "typescript": "^4.1.3"
+  }
 }
