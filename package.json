@@ -1,0 +1,19 @@
+{
+  "name": "medium",
+  "version": "1.0.0",
+  "description": "medium clone",
+  "main": "src/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AnkitPatel1999/medium_clone_api.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/AnkitPatel1999/medium_clone_api/issues"
+  },
+  "homepage": "https://github.com/AnkitPatel1999/medium_clone_api#readme"
+}
