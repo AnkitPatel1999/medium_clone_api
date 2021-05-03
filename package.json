@@ -23,7 +23,10 @@
   },
   "dependencies": {
     "express": "^4.17.1",
+    "pg": "^8.6.0",
+    "pg-hstore": "^2.3.3",
     "request": "^2.88.2",
+    "typeorm": "^0.2.32",
     "typescript": "^4.1.3"
   }
 }
