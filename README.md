@@ -31,3 +31,4 @@ realword.io
 
 coding-blocks-archives/Condult_NodeJS_TypeScript
 
+npm i bcrypt

@@ -2,12 +2,16 @@ import express from 'express';
 import { createConnection } from 'typeorm';
 import { Article } from './entities/Article';
 import { User } from './entities/User';
+import { userRoute } from './routes/User';
 
 const app = express();
+app.use(express.json())
 
 app.get('/', (req, res) => {
     res.send('Hello World');
 })
+
+app.use('/api', userRoute)
 
 async function start() {
     await createConnection({
@@ -17,6 +21,7 @@ async function start() {
         database: 'conduit',
         entities: [ Article, User ],
         synchronize: true,
+        dropSchema: true, // it create new db every time we start server
         logging: true,
         logger: 'advanced-console'
     })
