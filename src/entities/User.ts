@@ -1,7 +1,7 @@
 import { Column, CreateDateColumn, Entity, PrimaryColumn, UpdateDateColumn } from "typeorm";
 
 
-@Entity()
+@Entity('users')
 export class User {
     @PrimaryColumn()
     email: string
@@ -17,6 +17,8 @@ export class User {
 
     @Column({  nullable: true })
     image?: string
+
+    token?: string
 
     @CreateDateColumn()
     createdAt: Date
