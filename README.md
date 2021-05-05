@@ -32,3 +32,11 @@ realword.io
 coding-blocks-archives/Condult_NodeJS_TypeScript
 
 npm i bcrypt
+
+
+/////////////////read token value///////////run in browser console//////
+let token = "token"
+token.split('.')
+token.split('.')[1]
+atob(token.split('.')[1])
+JSON.parse(atob(token.split('.')[1]))

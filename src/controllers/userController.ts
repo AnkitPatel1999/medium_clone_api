@@ -1,7 +1,7 @@
 import { getRepository } from "typeorm";
 import { User } from "../entities/User";
 import { sign } from "../utils/jwt";
-import { hashPassword } from "../utils/password";
+import { hashPassword, matchPassword } from "../utils/password";
 import { senitizeFields } from "../utils/security";
 
 interface userdata {
@@ -9,7 +9,13 @@ interface userdata {
     email: string,
     password: string,
 }
-export async function createUser(data: userdata) {
+
+interface loginData {
+    email: string,
+    password: string,
+}
+
+export async function createUser(data: userdata) : Promise<User> {
     
     //check for data validation
     if(!data.username) throw new Error("username is blank")
@@ -42,5 +48,27 @@ export async function createUser(data: userdata) {
         throw e;
         
     }
-    
+
+}
+
+export async function loginUser(data: loginData) : Promise<User>{
+    //create data validation
+    if(!data.email) throw new Error("email is blank");
+    if(!data.password) throw new Error("password is blank");
+
+    const repo = getRepository(User);
+
+    //check if email is exists
+    const user = await repo.findOne(data.email)
+
+    if(!user) throw new Error("No user with this email id");
+
+    //check is password matches
+    const password = await matchPassword(user.password!, data.password);
+
+    if(!password) throw new Error("wrong password")
+
+    user.token = await sign(user);
+    return senitizeFields(user)
+
 }
