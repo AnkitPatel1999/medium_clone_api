@@ -19,8 +19,8 @@ export async function authByToken(req: Request, res: Response, next: NextFunctio
   const token = authHeader[1];
   try {
     const user = await decode(token);
-    if (!user) throw new Error('No user found in token')
-    ;(req as any).user = user
+    if (!user) throw new Error('No user found in token');
+    (req as any).user = user
     return next()
   } catch (e) {
     return res.status(401).json({
