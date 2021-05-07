@@ -1,5 +1,6 @@
 import { Router } from 'express';
-import { createUser, loginUser } from '../controllers/userController';
+import { createUser, getUser, loginUser } from '../controllers/userController';
+import { authByToken } from '../middleware/auth';
 
 const route = Router();
 
@@ -31,5 +32,21 @@ route.post('/user', async (req, res) => {
     }
 });
 
+route.patch('/', async(req, res) => {
+
+})
+
+route.get('/', authByToken, async(req , res) => {
+    console.log("xxxxxxxxxx=== ",(req as any).user);
+    
+    if((req as any).user) {
+        const user = await getUser((req as any).user.email);
+        return res.status(200).json({user})
+    } else {
+        return res.status(404).json({
+            errors: { body: ['no such user found'] },
+        })
+    }
+})
 
 export const userRoute = route

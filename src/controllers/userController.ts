@@ -72,3 +72,13 @@ export async function loginUser(data: loginData) : Promise<User>{
     return senitizeFields(user)
 
 }
+
+export async function getUser(email: string) : Promise<User> {
+    const repo = getRepository(User);
+
+    const user = await repo.findOne(email);
+
+    if(!user) throw new Error("No user with this email id");
+
+    return senitizeFields(user);
+}

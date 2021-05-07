@@ -40,3 +40,21 @@ token.split('.')
 token.split('.')[1]
 atob(token.split('.')[1])
 JSON.parse(atob(token.split('.')[1]))
+
+///////////////diff beteen put and patch
+
+existing data
+{a:10, b:20}
+
+PUT = data is replaced with new data that's comming 
+{b:30,c:40}
+
+result = {b:30,c:40}
+
+PATCH = key with patch is updated and extra key added , existing key remain
+{b:30,c:40}
+
+result = {a:10, b:30,c:40}
+
+////////////////////////
+
