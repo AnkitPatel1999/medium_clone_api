@@ -57,8 +57,16 @@ export async function createArticle(data: ArticleData, email: string): Promise<A
 
 }
  
-export async function deleteArticle(slug: string): Promise<boolean>{
-    return true;
+export async function deleteArticle(slug: string) {
+    const article = getRepository(Article);
+    
+    const articleExists = await article.findOne(slug);
+    if(!articleExists) throw new Error("not deleted");
+
+    const deletedArticle = await article.delete(slug)
+    
+    return deletedArticle;
+    
 }
 
 export async function updateArticle(slug: string , data: Partial<ArticleData>): Promise<Article> {

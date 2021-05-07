@@ -1,5 +1,5 @@
 import { Router } from "express";
-import { createArticle, getArticleBySlug } from "../controllers/articleController";
+import { createArticle, deleteArticle, getArticleBySlug } from "../controllers/articleController";
 import { authByToken } from "../middleware/auth";
 
 const route = Router();
@@ -46,8 +46,15 @@ route.patch('/:slug' , authByToken, async (req, res) => {
 })
 
 //DELETE /api/articles/:slug    delete an article
-route.delete('/:slug', async (req, res) => {
-
+route.delete('/:slug', authByToken, async (req, res) => {
+    try {
+        const deletedArticle = await deleteArticle(req.params.slug);
+        return res.status(200).json("Deletion successful");
+    } catch (e) {
+        return res.status(422).json({
+            errors: { body:['article deletion unsuccessful', e.message]}
+        })
+    }
 })
 
 
