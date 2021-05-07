@@ -4,18 +4,26 @@ import { sign } from "../utils/jwt";
 import { hashPassword, matchPassword } from "../utils/password";
 import { senitizeFields } from "../utils/security";
 
-interface userdata {
+interface createUserData {
     username: string,
     email: string,
     password: string,
 }
 
-interface loginData {
+interface loginUserData {
     email: string,
     password: string,
 }
 
-export async function createUser(data: userdata) : Promise<User> {
+interface updateUserData {
+    username?: string,
+    email?: string,
+    password?: string,
+    image?: string,
+    bio?: string,
+}
+
+export async function createUser(data: createUserData) : Promise<User> {
     
     //check for data validation
     if(!data.username) throw new Error("username is blank")
@@ -51,7 +59,7 @@ export async function createUser(data: userdata) : Promise<User> {
 
 }
 
-export async function loginUser(data: loginData) : Promise<User>{
+export async function loginUser(data: loginUserData) : Promise<User>{
     //create data validation
     if(!data.email) throw new Error("email is blank");
     if(!data.password) throw new Error("password is blank");
@@ -81,4 +89,20 @@ export async function getUser(email: string) : Promise<User> {
     if(!user) throw new Error("No user with this email id");
 
     return senitizeFields(user);
+}
+
+export async function updateUserDetails(data: updateUserData, email: string): Promise<User> {
+    const repo = getRepository(User);
+    const user = await repo.findOne(email);
+
+    if(!user) throw new Error("No user with this email id");
+
+    if(data.bio) user.bio = data.bio;
+    if(data.username) user.username = data.username;
+    if(data.image) user.image = data.image;
+    if(data.password) user.password = await hashPassword(data.password);
+
+    const updatedUser = await repo.save(user);
+
+    return senitizeFields(updatedUser);
 }

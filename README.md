@@ -57,4 +57,11 @@ PATCH = key with patch is updated and extra key added , existing key remain
 result = {a:10, b:30,c:40}
 
 ////////////////////////
+////////////////////////login with google/fb/github/twitter
+https://github.com/coding-blocks/oneauth
+////////////////
 
+TDD = Test Driven Development = what is support to happen = we write test cases(we test first)
+
+==> use slugify module
+      npm i slugify
