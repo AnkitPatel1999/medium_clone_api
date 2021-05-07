@@ -75,10 +75,11 @@ export async function updateArticle(slug: string , data: Partial<ArticleData>): 
     })
 }
 
-export async function getAllArticles(): Promise<Article[]>{
-    return new Promise<Article[]>((resolve, reject) => {
-
-    })
+export async function getAllArticles(){
+   
+    const article = await getRepository(Article)
+    .createQueryBuilder("article").getMany();    
+    return article
 }
 
 export async function getFeedArticles(email: string): Promise<Article[]> {
