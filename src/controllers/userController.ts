@@ -103,6 +103,6 @@ export async function updateUserDetails(data: updateUserData, email: string): Pr
     if(data.password) user.password = await hashPassword(data.password);
 
     const updatedUser = await repo.save(user);
-
+    user.token = await sign(updatedUser);
     return senitizeFields(updatedUser);
 }

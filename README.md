@@ -43,6 +43,17 @@ JSON.parse(atob(token.split('.')[1]))
 
 ///////////////diff beteen put and patch
 
+
+////////token contain////////
+{
+  "username": "patelkink",
+  "email": "king@ajtech.in",
+  "iat": 1620445827
+}
+
+////////////////////
+
+
 existing data
 {a:10, b:20}
 

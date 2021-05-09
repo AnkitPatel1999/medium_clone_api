@@ -15,14 +15,14 @@ export class Article {
     @Column({ type: "text"})
     body: string;
 
+    @ManyToOne( () => User )
+    author: User
+
     @CreateDateColumn()
     createdAt: Date
 
     @UpdateDateColumn()
     updatedAt: Date
-
-    @ManyToOne( () => User )
-    author: User
 
     constructor(slug: string, title: string, description: string, body: string, author: User) {
         this.slug = slug;

@@ -1,11 +1,19 @@
 import { Router } from 'express';
-import { getUser } from '../controllers/userController';
+import { getUser, updateUserDetails } from '../controllers/userController';
 import { authByToken } from '../middleware/auth';
 
 const route = Router();
 
 route.patch('/', authByToken, async(req, res) => {
-
+          
+  try {
+    const updatedUser = await updateUserDetails(req.body.user, (req as any).user.email)
+    return res.status(201).json({ updatedUser })
+  } catch (e) {
+    return res.status(404).json({
+      errors: { body: [ e.message ] }
+    })
+  }
 })
 
 // GET /user      get current user

@@ -12,17 +12,27 @@ interface ArticleData {
     author
 }
 
-// export async function getSlugById(req, res, next, id) {
-//     const article = getRepository(Article);
-//     const slugData = await article.findOne(id)
-//         .then((article) => {
-//             console.log("thisis ok======== ",article);
-//             req.article = article;
-//         })
+interface ArticleUpdateData {
+    slug: string
+    title: string,
+    description: string,
+    body: string,
+    tagList: string,
+    author
+}
+
+export async function getSlugById(req, res, next, id) {
+    const article = getRepository(Article);
+    const slugData = await article.findOne(req.params.slug)
+        .then((article) => {
+            console.log("thisis ok======== ",article);
+            req.article = slugData;
+        })
+        console.log("slugData ok======== ",article);
+
+    next()
     
-//     next()
-    
-// }
+}
 
 export async function createArticle(data: ArticleData, email: string): Promise<Article> {
     
@@ -39,14 +49,12 @@ export async function createArticle(data: ArticleData, email: string): Promise<A
         const user = await userRepo.findOne(email);
         if(!user) throw new Error("No user")
 
-        const userSeni = await senitizeFields(user);
-
         const article = await articleRepo.save(new Article(
             slugify(data.title),
             data.title,
             data.description,
             data.body,
-            userSeni
+            senitizeFields(user)
         ))
 
         return article;
@@ -69,10 +77,26 @@ export async function deleteArticle(slug: string) {
     
 }
 
-export async function updateArticle(slug: string , data: Partial<ArticleData>): Promise<Article> {
-    return new Promise<Article>((resolve, reject) => {
+export async function updateArticle(slug: string , data: ArticleUpdateData) {
 
-    })
+    try {
+        //Find out the author object
+
+        const article = await getRepository(Article).findOne(slug);
+
+        console.log("requested user xxxxxxxxxxxxxxxxxxxxxxxxxxx = > ",article);
+    
+        // data.slug = slugify(data.title)
+        // getRepository(Article).merge(article!, data)
+        // const result = getRepository(Article).save(article!);        
+        //return result
+
+        
+
+        
+    } catch (e) {
+        throw e  
+    }
 }
 
 export async function getAllArticles(){
@@ -90,8 +114,12 @@ export async function getFeedArticles(email: string): Promise<Article[]> {
 
 export async function getArticleBySlug(slug: string) {
     const article = getRepository(Article);
+    console.log("article ",article);
+
     const slugData = await article.findOne(slug);
 
+    console.log("slugData ",slugData);
+    
     if(!slugData) throw new Error("Not such article available")
 
     return slugData;
